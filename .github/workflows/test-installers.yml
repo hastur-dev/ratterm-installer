@@ -5,12 +5,19 @@
 name: Test Install Scripts
 
 on:
-  # Run on ALL pull requests targeting main (required for branch protection)
+  # Run on pull requests from dev to main
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened]
 
-  # Manual trigger for testing
+  # Manual trigger for testing on any branch
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run tests on'
+        required: false
+        default: 'dev'
+        type: string
 
 env:
   MAX_RETRIES: 3
