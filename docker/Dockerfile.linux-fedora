@@ -1,0 +1,40 @@
+# Dockerfile for Fedora Linux install testing
+# Image name: install-linux-fedora
+# Tests install scripts on Fedora (dnf package manager)
+
+FROM fedora:39
+
+# Labels for identification
+LABEL maintainer="ratterm-installer"
+LABEL description="Fedora Linux container for testing Vim installation scripts"
+LABEL os="linux-fedora"
+
+# Environment variables
+ENV TERM=xterm-256color
+
+# Install base dependencies
+RUN dnf install -y \
+    sudo \
+    bash \
+    curl \
+    ca-certificates \
+    && dnf clean all
+
+# Create app directory
+WORKDIR /app
+
+# Copy vim scripts
+COPY vim/ /app/vim/
+
+# Make scripts executable
+RUN chmod +x /app/vim/*.sh
+
+# Set default shell
+SHELL ["/bin/bash", "-c"]
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD bash --version || exit 1
+
+# Default command runs install then verify
+CMD ["/bin/bash", "-c", "/app/vim/install-linux.sh && /app/vim/run-linux.sh"]

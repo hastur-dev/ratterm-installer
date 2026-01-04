@@ -1,0 +1,42 @@
+# Dockerfile for Linux install testing
+# Image name: install-linux
+# Tests install-linux.sh and run-linux.sh scripts
+
+FROM ubuntu:22.04
+
+# Labels for identification
+LABEL maintainer="ratterm-installer"
+LABEL description="Linux container for testing Vim installation scripts"
+LABEL os="linux"
+
+# Environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TERM=xterm-256color
+
+# Install base dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    sudo \
+    bash \
+    curl \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create app directory
+WORKDIR /app
+
+# Copy vim scripts
+COPY vim/ /app/vim/
+
+# Make scripts executable
+RUN chmod +x /app/vim/*.sh
+
+# Set default shell
+SHELL ["/bin/bash", "-c"]
+
+# Health check - verify bash is working
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD bash --version || exit 1
+
+# Default command runs install then verify
+CMD ["/bin/bash", "-c", "/app/vim/install-linux.sh && /app/vim/run-linux.sh"]

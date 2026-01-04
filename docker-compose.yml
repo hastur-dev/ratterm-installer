@@ -1,0 +1,50 @@
+# Docker Compose for testing install scripts
+# Builds and runs containers for all supported Linux distributions
+
+version: '3.8'
+
+services:
+  # Ubuntu-based Linux container (primary)
+  install-linux:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.linux
+    image: install-linux:latest
+    container_name: test-install-linux
+    volumes:
+      - ./vim:/app/vim:ro
+    healthcheck:
+      test: ["CMD", "bash", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Fedora-based Linux container (dnf testing)
+  install-linux-fedora:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.linux-fedora
+    image: install-linux-fedora:latest
+    container_name: test-install-linux-fedora
+    volumes:
+      - ./vim:/app/vim:ro
+    healthcheck:
+      test: ["CMD", "bash", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Alpine Linux container (minimal)
+  install-linux-alpine:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.linux-alpine
+    image: install-linux-alpine:latest
+    container_name: test-install-linux-alpine
+    volumes:
+      - ./vim:/app/vim:ro
+    healthcheck:
+      test: ["CMD", "bash", "--version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
