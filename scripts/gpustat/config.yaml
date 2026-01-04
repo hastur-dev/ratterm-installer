@@ -1,0 +1,4 @@
+# gpustat configuration
+# GPU monitoring tool - does not operate on files
+
+choose-file: false

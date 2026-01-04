@@ -1,0 +1,4 @@
+# Vim configuration
+# Text editor - operates on files
+
+choose-file: true

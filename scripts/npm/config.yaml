@@ -1,0 +1,4 @@
+# npm configuration
+# Package manager - does not operate on individual files
+
+choose-file: false
