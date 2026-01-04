@@ -95,12 +95,17 @@ jobs:
           Write-Host "Validated $scriptsFound PowerShell scripts"
 
   # ============================================
-  # Linux Testing (Docker-based)
+  # Linux Testing (Docker-based) - All Technologies
   # ============================================
   test-linux:
-    name: Test Linux Install
+    name: Test Linux - ${{ matrix.technology }}
     runs-on: ubuntu-latest
     needs: validate-scripts
+    strategy:
+      fail-fast: false
+      matrix:
+        # Note: gpustat excluded - requires NVIDIA GPU not available in CI
+        technology: [vim, emacs, python, npm, javascript, rust]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -111,74 +116,68 @@ jobs:
           echo "Building install-linux Docker image..."
           docker build -f docker/Dockerfile.linux -t install-linux .
 
-      - name: Run install script in container
+      - name: Run install and verify scripts
         run: |
           set -euo pipefail
-          echo "Running install-linux.sh..."
-          docker run --rm install-linux /bin/bash -c "/app/scripts/vim/install-linux.sh"
-
-      - name: Run verification script in container
-        run: |
-          set -euo pipefail
-          echo "Running run-linux.sh to verify installation..."
-          docker run --rm install-linux /bin/bash -c "/app/scripts/vim/install-linux.sh && /app/scripts/vim/run-linux.sh"
+          TECH="${{ matrix.technology }}"
+          echo "Testing $TECH on Linux..."
+          docker run --rm install-linux /bin/bash -c "/app/scripts/$TECH/install-linux.sh && /app/scripts/$TECH/run-linux.sh"
 
   # ============================================
-  # macOS Testing (Native runner)
+  # macOS Testing (Native runner) - All Technologies
   # ============================================
   test-macos:
-    name: Test macOS Install
+    name: Test macOS - ${{ matrix.technology }}
     runs-on: macos-latest
     needs: validate-scripts
+    strategy:
+      fail-fast: false
+      matrix:
+        # Note: gpustat excluded - requires NVIDIA GPU not available in CI
+        technology: [vim, emacs, python, npm, javascript, rust]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Make scripts executable
         run: |
-          chmod +x scripts/vim/install-macos.sh
-          chmod +x scripts/vim/run-macos.sh
+          chmod +x scripts/${{ matrix.technology }}/install-macos.sh
+          chmod +x scripts/${{ matrix.technology }}/run-macos.sh
 
-      - name: Run install script
+      - name: Run install and verify scripts
         run: |
           set -euo pipefail
-          echo "Running install-macos.sh..."
-          ./scripts/vim/install-macos.sh
-
-      - name: Run verification script
-        run: |
-          set -euo pipefail
-          echo "Running run-macos.sh to verify installation..."
-          ./scripts/vim/run-macos.sh
+          TECH="${{ matrix.technology }}"
+          echo "Testing $TECH on macOS..."
+          ./scripts/$TECH/install-macos.sh
+          ./scripts/$TECH/run-macos.sh
 
   # ============================================
-  # Windows Testing (Native runner)
+  # Windows Testing (Native runner) - All Technologies
   # ============================================
   test-windows:
-    name: Test Windows Install
+    name: Test Windows - ${{ matrix.technology }}
     runs-on: windows-latest
     needs: validate-scripts
+    strategy:
+      fail-fast: false
+      matrix:
+        # Note: gpustat excluded - requires NVIDIA GPU not available in CI
+        technology: [vim, emacs, python, npm, javascript, rust]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run install script
+      - name: Run install and verify scripts
         shell: pwsh
         run: |
           Set-StrictMode -Version Latest
           $ErrorActionPreference = "Stop"
 
-          Write-Host "Running install-windows.ps1..."
-          & .\scripts\vim\install-windows.ps1
-
-      - name: Run verification script
-        shell: pwsh
-        run: |
-          Set-StrictMode -Version Latest
-          $ErrorActionPreference = "Stop"
-
-          Write-Host "Running run-windows.ps1 to verify installation..."
-          & .\scripts\vim\run-windows.ps1
+          $tech = "${{ matrix.technology }}"
+          Write-Host "Testing $tech on Windows..."
+          & ".\scripts\$tech\install-windows.ps1"
+          & ".\scripts\$tech\run-windows.ps1"
 
   # ============================================
   # Docker Build Test (all Dockerfiles)
