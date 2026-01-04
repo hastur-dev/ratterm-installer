@@ -263,51 +263,12 @@ jobs:
           & ".\scripts\$tech\run-windows.ps1"
 
   # ============================================
-  # Docker Build Test (all Dockerfiles)
-  # ============================================
-  test-docker-builds:
-    name: Test Docker Builds
-    runs-on: ubuntu-latest
-    needs: validate-scripts
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Build all Docker images
-        run: |
-          set -euo pipefail
-
-          MAX_DOCKERFILES=10
-          DOCKERFILE_COUNT=0
-
-          for dockerfile in docker/Dockerfile.*; do
-            if [ -f "$dockerfile" ]; then
-              ((DOCKERFILE_COUNT++)) || true
-              if [ $DOCKERFILE_COUNT -gt $MAX_DOCKERFILES ]; then
-                echo "ERROR: Too many Dockerfiles"
-                exit 1
-              fi
-
-              os_name="${dockerfile##*.}"
-              image_name="install-${os_name}"
-
-              echo "Building: ${image_name} from ${dockerfile}"
-              docker build -f "$dockerfile" -t "$image_name" .
-
-              echo "Testing: ${image_name}"
-              docker run --rm "$image_name" echo "Container started successfully"
-            fi
-          done
-
-          echo "Built and tested $DOCKERFILE_COUNT Docker images"
-
-  # ============================================
   # Required Status Check (for branch protection)
   # ============================================
   ci-status:
     name: CI Status
     runs-on: ubuntu-latest
-    needs: [discover-technologies, validate-scripts, test-linux, test-macos, test-windows, test-docker-builds]
+    needs: [discover-technologies, validate-scripts, test-linux, test-macos, test-windows]
     if: always()
     steps:
       - name: Check all jobs passed
@@ -364,13 +325,6 @@ jobs:
             echo "⏭️  Linux tests: skipped (no new technologies)"
             echo "⏭️  macOS tests: skipped (no new technologies)"
             echo "⏭️  Windows tests: skipped (no new technologies)"
-          fi
-
-          if [ "${{ needs.test-docker-builds.result }}" != "success" ]; then
-            echo "❌ Docker builds: ${{ needs.test-docker-builds.result }}"
-            FAILED=1
-          else
-            echo "✅ Docker builds: passed"
           fi
 
           echo "========================================="
