@@ -53,3 +53,4 @@ function Main {
 }
 
 Main
+exit 0
