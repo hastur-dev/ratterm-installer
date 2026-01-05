@@ -13,8 +13,19 @@ main() {
         brew install xh && installed=true
     fi
 
-    if [[ "$installed" == "false" ]] && command -v cargo &> /dev/null; then
-        cargo install xh && installed=true
+    if [[ "$installed" == "false" ]]; then
+        local version
+        version=$(curl -s https://api.github.com/repos/ducaale/xh/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/')
+        local arch
+        arch=$(uname -m)
+        case "$arch" in
+            x86_64) arch="x86_64" ;;
+            aarch64) arch="aarch64" ;;
+        esac
+        curl -sL "https://github.com/ducaale/xh/releases/download/v${version}/xh-v${version}-${arch}-unknown-linux-musl.tar.gz" | tar xz -C /tmp
+        mv /tmp/xh-v${version}-${arch}-unknown-linux-musl/xh /usr/local/bin/
+        chmod +x /usr/local/bin/xh
+        installed=true
     fi
 
     if command -v xh &> /dev/null; then
