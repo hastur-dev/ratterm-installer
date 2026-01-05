@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "dagger uninstalled"
 }
 Main
+exit 0

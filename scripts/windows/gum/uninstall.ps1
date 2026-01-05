@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "gum uninstalled"
 }
 Main
+exit 0

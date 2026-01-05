@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "ttyd uninstalled"
 }
 Main
+exit 0

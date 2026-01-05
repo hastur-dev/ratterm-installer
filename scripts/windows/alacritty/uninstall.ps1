@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "alacritty uninstalled"
 }
 Main
+exit 0

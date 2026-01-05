@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "packer uninstalled"
 }
 Main
+exit 0

@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "typos uninstalled"
 }
 Main
+exit 0

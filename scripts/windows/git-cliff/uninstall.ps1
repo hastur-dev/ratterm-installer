@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "git-cliff uninstalled"
 }
 Main
+exit 0

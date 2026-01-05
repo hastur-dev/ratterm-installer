@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "kustomize uninstalled"
 }
 Main
+exit 0

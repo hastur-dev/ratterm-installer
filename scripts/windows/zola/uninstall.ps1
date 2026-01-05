@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "zola uninstalled"
 }
 Main
+exit 0

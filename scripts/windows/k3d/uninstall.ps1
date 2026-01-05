@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "k3d uninstalled"
 }
 Main
+exit 0

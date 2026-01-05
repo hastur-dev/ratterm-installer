@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "tailscale uninstalled"
 }
 Main
+exit 0

@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "mc uninstalled"
 }
 Main
+exit 0

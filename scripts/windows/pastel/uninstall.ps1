@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "pastel uninstalled"
 }
 Main
+exit 0

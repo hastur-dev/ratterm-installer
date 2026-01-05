@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "consul uninstalled"
 }
 Main
+exit 0

@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "poetry uninstalled"
 }
 Main
+exit 0

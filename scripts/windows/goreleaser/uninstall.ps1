@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "goreleaser uninstalled"
 }
 Main
+exit 0

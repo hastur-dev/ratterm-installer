@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "taplo uninstalled"
 }
 Main
+exit 0

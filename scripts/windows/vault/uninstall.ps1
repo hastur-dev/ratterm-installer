@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "vault uninstalled"
 }
 Main
+exit 0

@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "grype uninstalled"
 }
 Main
+exit 0

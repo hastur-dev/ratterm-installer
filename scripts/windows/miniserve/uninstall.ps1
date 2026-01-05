@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "miniserve uninstalled"
 }
 Main
+exit 0

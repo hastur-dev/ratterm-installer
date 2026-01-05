@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "actionlint uninstalled"
 }
 Main
+exit 0

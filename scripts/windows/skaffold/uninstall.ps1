@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "skaffold uninstalled"
 }
 Main
+exit 0

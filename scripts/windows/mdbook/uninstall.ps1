@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "mdbook uninstalled"
 }
 Main
+exit 0

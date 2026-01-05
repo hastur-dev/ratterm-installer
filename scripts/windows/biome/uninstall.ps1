@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "biome uninstalled"
 }
 Main
+exit 0

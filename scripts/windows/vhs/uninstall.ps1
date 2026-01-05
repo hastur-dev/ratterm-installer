@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "vhs uninstalled"
 }
 Main
+exit 0

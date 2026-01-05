@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "curlie uninstalled"
 }
 Main
+exit 0

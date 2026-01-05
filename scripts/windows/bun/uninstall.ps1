@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "bun uninstalled"
 }
 Main
+exit 0

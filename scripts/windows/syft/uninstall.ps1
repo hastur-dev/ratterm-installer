@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "syft uninstalled"
 }
 Main
+exit 0

@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "dprint uninstalled"
 }
 Main
+exit 0

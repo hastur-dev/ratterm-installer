@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "turbo uninstalled"
 }
 Main
+exit 0

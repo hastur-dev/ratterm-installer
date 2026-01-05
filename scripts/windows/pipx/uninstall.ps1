@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "pipx uninstalled"
 }
 Main
+exit 0

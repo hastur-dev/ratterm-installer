@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "doggo uninstalled"
 }
 Main
+exit 0

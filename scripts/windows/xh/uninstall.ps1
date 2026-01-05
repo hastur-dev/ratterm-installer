@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "xh uninstalled"
 }
 Main
+exit 0

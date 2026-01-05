@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "uv uninstalled"
 }
 Main
+exit 0

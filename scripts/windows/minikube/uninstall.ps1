@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "minikube uninstalled"
 }
 Main
+exit 0

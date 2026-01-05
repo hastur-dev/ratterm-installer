@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "cosign uninstalled"
 }
 Main
+exit 0
