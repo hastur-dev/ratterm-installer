@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "task uninstalled"
 }
 Main
+exit 0

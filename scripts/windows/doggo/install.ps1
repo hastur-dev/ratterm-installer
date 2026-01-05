@@ -19,7 +19,7 @@ function Main {
     }
     if (-not $installed) {
         $release = Invoke-RestMethod -Uri "https://api.github.com/repos/mr-karan/doggo/releases/latest"
-        $asset = $release.assets | Where-Object { $_.name -like "*windows_amd64.zip" } | Select-Object -First 1
+        $asset = $release.assets | Where-Object { $_.name -like "*Windows_x86_64.zip" } | Select-Object -First 1
         if ($asset) {
             $zip = "$env:TEMP\doggo.zip"
             Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip
@@ -40,3 +40,4 @@ function Main {
     Write-LogSuccess "Installation complete!"
 }
 Main
+exit 0

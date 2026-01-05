@@ -12,3 +12,4 @@ function Main {
     Write-LogSuccess "vagrant uninstalled"
 }
 Main
+exit 0

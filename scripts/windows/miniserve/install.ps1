@@ -34,3 +34,4 @@ function Main {
     Write-LogSuccess "Installation complete!"
 }
 Main
+exit 0
