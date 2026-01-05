@@ -23,7 +23,8 @@ function Main {
         $zip = "$env:TEMP\dprint.zip"
         Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip
         Expand-Archive -Path $zip -DestinationPath "$env:TEMP\dprint" -Force
-        Copy-Item "$env:TEMP\dprint\dprint.exe" -Destination "C:\Windows\System32\dprint.exe" -Force
+        $exe = Get-ChildItem -Path "$env:TEMP\dprint" -Recurse -Filter "dprint.exe" | Select-Object -First 1
+        Copy-Item $exe.FullName -Destination "C:\Windows\System32\dprint.exe" -Force
         Remove-Item $zip -Force
         $installed = $true
     }

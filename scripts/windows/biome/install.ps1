@@ -17,6 +17,14 @@ function Main {
         scoop install biome 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) { $installed = $true }
     }
+    if (-not $installed) {
+        $release = Invoke-RestMethod -Uri "https://api.github.com/repos/biomejs/biome/releases/latest"
+        $asset = $release.assets | Where-Object { $_.name -like "*win32-x64.exe" } | Select-Object -First 1
+        if ($asset) {
+            Invoke-WebRequest -Uri $asset.browser_download_url -OutFile "C:\Windows\System32\biome.exe"
+            $installed = $true
+        }
+    }
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
     if (Get-Command biome -ErrorAction SilentlyContinue) {
         Write-LogSuccess "biome installed: $(biome --version 2>&1 | Select-Object -First 1)"

@@ -23,7 +23,8 @@ function Main {
         $zip = "$env:TEMP\gum.zip"
         Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip
         Expand-Archive -Path $zip -DestinationPath "$env:TEMP\gum" -Force
-        Copy-Item "$env:TEMP\gum\gum.exe" -Destination "C:\Windows\System32\gum.exe" -Force
+        $exe = Get-ChildItem -Path "$env:TEMP\gum" -Recurse -Filter "gum.exe" | Select-Object -First 1
+        Copy-Item $exe.FullName -Destination "C:\Windows\System32\gum.exe" -Force
         Remove-Item $zip -Force
         $installed = $true
     }

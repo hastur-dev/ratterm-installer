@@ -17,6 +17,10 @@ function Main {
         scoop install minio-client 2>&1 | Out-Null
         if ($LASTEXITCODE -eq 0) { $installed = $true }
     }
+    if (-not $installed) {
+        Invoke-WebRequest -Uri "https://dl.min.io/client/mc/release/windows-amd64/mc.exe" -OutFile "C:\Windows\System32\mc.exe"
+        $installed = $true
+    }
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
     if (Get-Command mc -ErrorAction SilentlyContinue) {
         Write-LogSuccess "mc installed: $(mc --version 2>&1 | Select-Object -First 1)"

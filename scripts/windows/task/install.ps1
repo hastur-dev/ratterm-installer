@@ -23,7 +23,8 @@ function Main {
         $zip = "$env:TEMP\task.zip"
         Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip
         Expand-Archive -Path $zip -DestinationPath "$env:TEMP\task" -Force
-        Copy-Item "$env:TEMP\task\task.exe" -Destination "C:\Windows\System32\task.exe" -Force
+        $exe = Get-ChildItem -Path "$env:TEMP\task" -Recurse -Filter "task.exe" | Select-Object -First 1
+        Copy-Item $exe.FullName -Destination "C:\Windows\System32\task.exe" -Force
         Remove-Item $zip -Force
         $installed = $true
     }

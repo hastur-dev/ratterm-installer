@@ -23,7 +23,8 @@ function Main {
         $zip = "$env:TEMP\vhs.zip"
         Invoke-WebRequest -Uri $asset.browser_download_url -OutFile $zip
         Expand-Archive -Path $zip -DestinationPath "$env:TEMP\vhs" -Force
-        Copy-Item "$env:TEMP\vhs\vhs.exe" -Destination "C:\Windows\System32\vhs.exe" -Force
+        $exe = Get-ChildItem -Path "$env:TEMP\vhs" -Recurse -Filter "vhs.exe" | Select-Object -First 1
+        Copy-Item $exe.FullName -Destination "C:\Windows\System32\vhs.exe" -Force
         Remove-Item $zip -Force
         $installed = $true
     }
